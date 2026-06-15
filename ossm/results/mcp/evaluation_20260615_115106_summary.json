@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-12T13:05:30.029678+00:00",
+  "timestamp": "2026-06-15T11:51:06.563772+00:00",
   "total_evaluations": 1,
   "summary_stats": {
     "overall": {
@@ -12,14 +12,14 @@
       "fail_rate": 0.0,
       "error_rate": 0.0,
       "skipped_rate": 0.0,
-      "total_judge_llm_input_tokens": 1319,
-      "total_judge_llm_output_tokens": 227,
-      "total_judge_llm_tokens": 1546,
+      "total_judge_llm_input_tokens": 969,
+      "total_judge_llm_output_tokens": 234,
+      "total_judge_llm_tokens": 1203,
       "total_embedding_tokens": 0,
-      "total_api_input_tokens": 161683,
-      "total_api_output_tokens": 1004,
-      "total_api_tokens": 162687,
-      "total_tokens": 164233
+      "total_api_input_tokens": 16332,
+      "total_api_output_tokens": 579,
+      "total_api_tokens": 16911,
+      "total_tokens": 18114
     },
     "by_metric": {
       "custom:answer_correctness": {
@@ -33,17 +33,17 @@
         "skipped_rate": 0.0,
         "score_statistics": {
           "count": 1,
-          "mean": 0.96,
-          "median": 0.96,
+          "mean": 0.93,
+          "median": 0.93,
           "std": 0.0,
-          "min": 0.96,
-          "max": 0.96,
+          "min": 0.93,
+          "max": 0.93,
           "confidence_interval": null
         }
       }
     },
     "by_conversation": {
-      "check_latency_bookinfo_issue": {
+      "troubleshoot_latency_trace": {
         "pass": 1,
         "fail": 0,
         "error": 0,
@@ -55,7 +55,7 @@
       }
     },
     "by_tag": {
-      "latency_bookinfo_issue": {
+      "troubleshoot_latency_trace": {
         "pass": 1,
         "fail": 0,
         "error": 0,
@@ -66,24 +66,24 @@
         "skipped_rate": 0.0,
         "score_statistics": {
           "count": 1,
-          "mean": 0.96,
-          "median": 0.96,
+          "mean": 0.93,
+          "median": 0.93,
           "std": 0.0,
-          "min": 0.96,
-          "max": 0.96,
+          "min": 0.93,
+          "max": 0.93,
           "confidence_interval": null
         }
       }
     },
     "agent_latency_stats": {
       "count": 1,
-      "mean": 56.315898233999974,
-      "median": 56.315898233999974,
+      "mean": 27.103564346999974,
+      "median": 27.103564346999974,
       "std": 0.0,
-      "min": 56.315898233999974,
-      "max": 56.315898233999974,
-      "p95": 56.315898233999974,
-      "p99": 56.315898233999974
+      "min": 27.103564346999974,
+      "max": 27.103564346999974,
+      "p95": 27.103564346999974,
+      "p99": 27.103564346999974
     }
   },
   "configuration": {
@@ -128,30 +128,30 @@
   },
   "results": [
     {
-      "conversation_group_id": "check_latency_bookinfo_issue",
-      "tag": "latency_bookinfo_issue",
-      "turn_id": "diagnose",
+      "conversation_group_id": "troubleshoot_latency_trace",
+      "tag": "troubleshoot_latency_trace",
+      "turn_id": "investigate_and_fix",
       "metric_identifier": "custom:answer_correctness",
       "result": "PASS",
-      "score": 0.96,
+      "score": 0.93,
       "threshold": null,
-      "execution_time": 58.840405627999985,
-      "evaluation_latency": 2.524507394000011,
-      "judge_llm_input_tokens": 1319,
-      "judge_llm_output_tokens": 227,
+      "execution_time": 29.397194352000042,
+      "evaluation_latency": 2.293630005000068,
+      "judge_llm_input_tokens": 969,
+      "judge_llm_output_tokens": 234,
       "judge_scores": [
         {
           "judge_id": "primary",
-          "score": 0.96,
-          "reason": "Custom answer correctness: 0.96 - The response is highly aligned with the expected answer. It correctly:",
-          "judge_input_tokens": 1319,
-          "judge_output_tokens": 227,
+          "score": 0.93,
+          "reason": "Custom answer correctness: 0.93 - The response is largely correct and well aligned with the expected answer. It correctly identifies the root cause as a 3-second fault injection delay in the `ratings` VirtualService, applied to 100% of traffic, and names `ratings` as the responsible service. It also correctly explains that this delay propagates upstream and causes `reviews` and `productpage` to appear slow, which matches the expected causal chain.",
+          "judge_input_tokens": 969,
+          "judge_output_tokens": 234,
           "embedding_tokens": 0
         }
       ],
       "time_to_first_token": null,
       "streaming_duration": null,
-      "agent_latency": 56.315898233999974,
+      "agent_latency": 27.103564346999974,
       "tokens_per_second": null
     }
   ]

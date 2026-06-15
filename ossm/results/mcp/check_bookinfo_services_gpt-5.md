@@ -1,7 +1,7 @@
 # ✅ check_bookinfo_services
 
 **OLS model:** `openai/gpt-5` &nbsp;|&nbsp; **Judge:** `openai/gpt-5.4-mini`  
-**Run:** 2026-06-12 13:04:22 &nbsp;|&nbsp; **Evaluations:** 1 &nbsp;|&nbsp; ✅ 1 PASS &nbsp; ❌ 0 FAIL &nbsp; ⚠️ 0 ERROR &nbsp; (100%)
+**Run:** 2026-06-15 11:29:28 &nbsp;|&nbsp; **Evaluations:** 1 &nbsp;|&nbsp; ✅ 1 PASS &nbsp; ❌ 0 FAIL &nbsp; ⚠️ 0 ERROR &nbsp; (100%)
 
 > Check my bookinfo namespace services in my servicemesh
 
@@ -9,18 +9,18 @@
 
 ## Pass Rates
 
-![Pass Rates](graphs/evaluation_20260612_130422_pass_rates.png)
+![Pass Rates](graphs/evaluation_20260615_112928_pass_rates.png)
 
 <details>
 <summary>More graphs</summary>
 
 ### Score Distribution
 
-![Score Distribution](graphs/evaluation_20260612_130422_score_distribution.png)
+![Score Distribution](graphs/evaluation_20260615_112928_score_distribution.png)
 
 ### Status Breakdown
 
-![Status Breakdown](graphs/evaluation_20260612_130422_status_breakdown.png)
+![Status Breakdown](graphs/evaluation_20260615_112928_status_breakdown.png)
 
 </details>
 
@@ -28,7 +28,7 @@
 
 | Metric | ✅ | ❌ | ⚠️ | Pass Rate | Mean Score |
 |---|---|---|---|---|---|
-| `custom:answer_correctness` | 1 | 0 | 0 | ✅ 100% | 0.72 |
+| `custom:answer_correctness` | 1 | 0 | 0 | ✅ 100% | 0.92 |
 
 ## Turns
 
@@ -40,15 +40,15 @@
 
 | Metric | Result | Score |
 |---|---|---|
-| `custom:answer_correctness` | ✅ PASS | `████████████░░░░` 0.72 |
+| `custom:answer_correctness` | ✅ PASS | `███████████████░` 0.92 |
 
 <details>
 <summary>Actual tool calls</summary>
 
 - `kiali_get_mesh_status`()
 - `kiali_get_mesh_traffic_graph`(namespaces=bookinfo)
-- `resources_list`(apiVersion=v1, kind=Service, namespace=bookinfo)
-- `events_list`(namespace=bookinfo)
+- `kiali_get_resource_details`(namespaces=bookinfo, resourceType=service)
+- `kiali_manage_istio_config_read`(action=list, namespace=bookinfo)
 
 </details>
 
@@ -56,23 +56,23 @@
 <summary>Agent response</summary>
 
 ```
-Assessment – bookinfo namespace in service mesh
+Assessment: bookinfo namespace in the mesh
 
-Summary
-- Mesh health: Healthy. Istio control plane (istiod 1.28.0) healthy; bookinfo data plane marked HEALTHY. mTLS enabled on all observed edges.
-- Services discovered in bookinfo:
-  - details (ClusterIP 10.96.198.160, port 9080/TCP)
-  - productpage (ClusterIP 10.96.42.135, port 9080/TCP)
-  - ratings (ClusterIP 10.96.118.181, port 9080/TCP)
-  - reviews (ClusterIP 10.96.77.205, port 9080/TCP)
-  - istio-ingressgateway (ClusterIP 10.96.92.56, ports 80/443)
-- Traffic and dependencies (versionedApp graph, last 10m):
-  - istio-ingressgateway → productpage v1: HTTP, mTLS: true, P50 latency: 69 ms, throughput: 11,530 req/10m, Healthy
-  - productpage v1 → details v1: HTTP, mTLS: true, 5 ms, 796, Healthy
-  - productpage v1 → reviews v1/v2/v3: HTTP, mTLS: true, 15/41/78 ms, 302/288/409, Healthy
-  - reviews v2/v3 → ratings v1: HTTP, mTLS: true, 5 ms, 201/272, Healthy
-- Errors: none observed (total error rate: 0%).
-- Observability stack: Prometheu…
+Mesh-wide context
+- Control plane: istiod (istio-system/istiod) Healthy, version 1.28.0. Evidence: kiali_get_mesh_status.
+- Data plane: Namespace bookinfo HEALTHY. Evidence: kiali_get_mesh_status → data_plane.monitored_namespaces.
+- Observability: Grafana Unreachable (Prometheus and Jaeger Healthy). Evidence: kiali_get_mesh_status → observability_stack.
+
+Services discovered in bookinfo
+- details (bookinfo/details): Healthy, labels: app=details, service=details. Sidecar injected.
+- productpage (bookinfo/productpage): Healthy, labels: app=productpage, service=productpage. Sidecar injected.
+- ratings (bookinfo/ratings): Healthy, labels: app=ratings, service=ratings. Sidecar injected.
+- reviews (bookinfo/reviews): Healthy, labels: app=reviews, service=reviews. Sidecar injected.
+- istio-ingressgateway (bookinfo/istio-ingressgateway): Health NA, no labels reported. Sidecar injected.
+
+Istio config in bookinfo
+- Gateway: bookinfo-gateway (Valid).
+- V…
 ```
 
 </details>
@@ -86,5 +86,5 @@ Using Kiali/OSSM MCP tools, the agent should provide a comprehensive health over
 
 ---
 
-*Tokens — Judge: 1,415 | API: 11,915 | Total: 13,330*
-*Latency — mean: 16.9s | p95: 16.9s*
+*Tokens — Judge: 1,341 | API: 8,250 | Total: 9,591*
+*Latency — mean: 32.2s | p95: 32.2s*

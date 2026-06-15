@@ -1,7 +1,7 @@
 # ✅ check_mesh_status_no_kiali
 
 **OLS model:** `openai/gpt-5` &nbsp;|&nbsp; **Judge:** `openai/gpt-5.4-mini`  
-**Run:** 2026-06-12 13:05:16 &nbsp;|&nbsp; **Evaluations:** 1 &nbsp;|&nbsp; ✅ 1 PASS &nbsp; ❌ 0 FAIL &nbsp; ⚠️ 0 ERROR &nbsp; (100%)
+**Run:** 2026-06-15 11:22:41 &nbsp;|&nbsp; **Evaluations:** 1 &nbsp;|&nbsp; ✅ 1 PASS &nbsp; ❌ 0 FAIL &nbsp; ⚠️ 0 ERROR &nbsp; (100%)
 
 > Check the status of the mesh and identify any issues.
 
@@ -9,18 +9,18 @@
 
 ## Pass Rates
 
-![Pass Rates](graphs/evaluation_20260612_130516_pass_rates.png)
+![Pass Rates](graphs/evaluation_20260615_112241_pass_rates.png)
 
 <details>
 <summary>More graphs</summary>
 
 ### Score Distribution
 
-![Score Distribution](graphs/evaluation_20260612_130516_score_distribution.png)
+![Score Distribution](graphs/evaluation_20260615_112241_score_distribution.png)
 
 ### Status Breakdown
 
-![Status Breakdown](graphs/evaluation_20260612_130516_status_breakdown.png)
+![Status Breakdown](graphs/evaluation_20260615_112241_status_breakdown.png)
 
 </details>
 
@@ -45,15 +45,15 @@
 <details>
 <summary>Actual tool calls</summary>
 
-- `namespaces_list`()
 - `resources_list`(apiVersion=maistra.io/v2, kind=ServiceMeshControlPlane)
 - `resources_list`(apiVersion=maistra.io/v1, kind=ServiceMeshMemberRoll)
+- `namespaces_list`()
 - `pods_list_in_namespace`(namespace=istio-system)
 - `pods_list_in_namespace`(namespace=bookinfo)
-- `resources_list`(apiVersion=apps/v1, kind=Deployment, namespace=istio-system)
 - `events_list`(namespace=istio-system)
 - `events_list`(namespace=bookinfo)
-- `resources_list`(apiVersion=v1, kind=ServiceAccount, namespace=istio-system)
+- `pods_log`(name=istiod-d468976dc-27ct2, namespace=istio-system, tail=200)
+- `pods_log`(name=productpage-v1-574c45789d-s5jfq, namespace=bookinfo, container=istio-proxy, tail=120)
 
 </details>
 
@@ -61,20 +61,27 @@
 <summary>Agent response</summary>
 
 ```
-Assessment of service mesh
+Assessment: Service Mesh health and issues
 
-Summary
-- Control plane (namespace istio-system) is healthy:
-  - istiod: Pod istiod-d468976dc-c4cth (istio-system) 1/1 Running, image docker.io/istio/pilot:1.28.0.
-  - Gateways: istio-ingressgateway-7554995647-cwtxl and istio-egressgateway-69b8465445-t7zvj 1/1 Running, image docker.io/istio/proxyv2:1.28.0.
-  - Observability: prometheus-6964c8fbb8-xx8kg 2/2 Running, jaeger-555f5df568-2mjdd 1/1 Running, kiali-79f9fc974c-bcmdp 1/1 Running.
-- Data plane (namespace bookinfo) is healthy and sidecar injection is working:
-  - All app pods are 2/2 Ready: details-v1-6cc9db646f-n9m8m, productpage-v1-574c45789d-478fr, ratings-v1-59d4b8b76f-m4rtk, reviews-v1-7bbc4c5497-bcf47, reviews-v2-7b5b4d5d65-8ztdc, reviews-v3-5bcf66d84f-dxv6h.
-  - Labels show security.istio.io/tlsMode=istio on these pods, confirming mTLS and sidecar presence.
+Control plane (namespace: istio-system)
+- Pods (all Running, Ready):
+  - istiod-d468976dc-27ct2 (istiod) 1/1, IP 10.244.1.3
+  - istio-ingressgateway-7554995647-dxc8w 1/1, IP 10.244.1.5
+  - istio-egressgateway-69b8465445-prfp4 1/1, IP 10.244.1.4
+  - prometheus-6964c8fbb8-bsrsj 2/2, IP 10.244.1.6
+  - jaeger-555f5df568-lmzc7 1/1, IP 10.244.1.8
+  - kiali-79f9fc974c-79mxq 1/1, IP 10.244.1.9
+- Istiod evidence:
+  - XDS active with 9 ConnectedEndpoints; multiple successful CDS/LDS/RDS/EDS pushes.
+  - Only “no endpoints” messages during initial bring‑up; none persisting afterward.
 
-Evidence
-- Pods (istio-system): all Running/Ready with stated images and labels (app.kubernetes.io/*, istio.io/rev=default).
-- Deployments (…
+Data plane (example namespace: bookinfo)
+- Sidecar injection enabled (labels: istio-injection=enabled, istio.io/rev=default).
+- Pods (all Running, Ready, sidecars present):
+  - productpage-v1-574c45789d-s5jfq 2/2, IP 10.244.1.15
+  - details-v1-6cc9db646f-2w7wv 2/2, IP 10.244.1.10
+  - ratings-v1-59d4b8b76f-8zdlz 2/2, IP 10.244.1.11
+  - reviews-v1/v2/v3 2/2 each, IPs 10.244.1…
 ```
 
 </details>
@@ -93,5 +100,5 @@ Next steps and conclusion — provide kubectl commands to remediate identified i
 
 ---
 
-*Tokens — Judge: 1,725 | API: 41,391 | Total: 43,116*
-*Latency — mean: 47.5s | p95: 47.5s*
+*Tokens — Judge: 1,970 | API: 97,178 | Total: 99,148*
+*Latency — mean: 53.8s | p95: 53.8s*
