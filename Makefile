@@ -38,6 +38,7 @@ endif
 DEFAULT_KUBERNETES_MCP_CONFIG_FILE = mcp_config.toml
 DEFAULT_OSSM_MCP_CONFIG_FILE = mcp_config_ossm.toml
 MCP_CONFIG        ?= mcp_config/$(DEFAULT_KUBERNETES_MCP_CONFIG_FILE)
+KIALI_TOOLSET_ENABLED ?= true
 
 OLS_IMAGE         ?= quay.io/openshift-lightspeed/lightspeed-service-api:latest
 LSE_TAG           ?= main       # lightspeed-evaluation tag/branch for the dashboard
@@ -67,6 +68,12 @@ MCP_ENABLED ?= true
 ifeq ($(MCP_ENABLED),false)
   OLS_PROVIDER_CONFIG_FILE = olsconfig-openai-no-mcp.yaml
   SYSTEM_CONFIG             = system/system_openai.yaml
+endif
+
+ifeq ($(KIALI_TOOLSET_ENABLED),true)
+  MCP_CONFIG = mcp_config/$(DEFAULT_KUBERNETES_MCP_CONFIG_FILE)
+else
+  MCP_CONFIG = mcp_config/$(DEFAULT_OSSM_MCP_CONFIG_FILE)
 endif
 
 # ── Dashboard paths (relative to dashboard/) ───────────────────────────────────

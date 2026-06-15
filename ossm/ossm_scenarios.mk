@@ -13,7 +13,8 @@
         check_mesh_status-test check_mesh_status-test-without-mcp \
         fix_bookinfo_routing-test fix_bookinfo_routing-test-without-mcp \
         fix_bookinfo_fault_injection-test fix_bookinfo_fault_injection-test-without-mcp \
-        troubleshoot_latency_trace-test troubleshoot_latency_trace-test-without-mcp
+        troubleshoot_latency_trace-test troubleshoot_latency_trace-test-without-mcp \
+        check_istioObjects_status-test
 
 OSSM_CONVERSATIONS = ossm/conversations.yaml
 
@@ -42,6 +43,7 @@ generate-ossm-results: check-venv
 # ── all / test: run every conversation in conversations.yaml ──────────────────
 test: check-venv check-openai-key check-services check-bookinfo \
 	check_mesh_status-test \
+	check_istioObjects_status-test \
 	check_bookinfo_services-test \
 	check_latency_bookinfo_issue-test \
 	fix_bookinfo_routing-test \
@@ -76,6 +78,11 @@ check_bookinfo_services-test: check-venv check-openai-key check-services check-b
 check_latency_bookinfo_issue-test: check-venv check-openai-key check-services check-bookinfo
 	$(OSSM_EVAL_BASE) \
 	  --tag latency_bookinfo_issue
+
+check_istioObjects_status-test: check-venv check-openai-key check-services check-bookinfo
+	$(OSSM_EVAL_BASE) \
+	  --tag check_istioObjects_status
+
 # No MCP Tests
 check_mesh_status-test-without-mcp: check-venv check-openai-key check-services-ols
 	$(OSSM_EVAL_BASE) \
