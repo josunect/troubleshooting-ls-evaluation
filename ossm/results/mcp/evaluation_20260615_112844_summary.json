@@ -1,0 +1,158 @@
+{
+  "timestamp": "2026-06-15T11:28:44.832160+00:00",
+  "total_evaluations": 1,
+  "summary_stats": {
+    "overall": {
+      "TOTAL": 1,
+      "PASS": 1,
+      "FAIL": 0,
+      "ERROR": 0,
+      "SKIPPED": 0,
+      "pass_rate": 100.0,
+      "fail_rate": 0.0,
+      "error_rate": 0.0,
+      "skipped_rate": 0.0,
+      "total_judge_llm_input_tokens": 1357,
+      "total_judge_llm_output_tokens": 295,
+      "total_judge_llm_tokens": 1652,
+      "total_embedding_tokens": 0,
+      "total_api_input_tokens": 7078,
+      "total_api_output_tokens": 935,
+      "total_api_tokens": 8013,
+      "total_tokens": 9665
+    },
+    "by_metric": {
+      "custom:answer_correctness": {
+        "pass": 1,
+        "fail": 0,
+        "error": 0,
+        "skipped": 0,
+        "pass_rate": 100.0,
+        "fail_rate": 0.0,
+        "error_rate": 0.0,
+        "skipped_rate": 0.0,
+        "score_statistics": {
+          "count": 1,
+          "mean": 0.97,
+          "median": 0.97,
+          "std": 0.0,
+          "min": 0.97,
+          "max": 0.97,
+          "confidence_interval": null
+        }
+      }
+    },
+    "by_conversation": {
+      "check_istioObject_status": {
+        "pass": 1,
+        "fail": 0,
+        "error": 0,
+        "skipped": 0,
+        "pass_rate": 100.0,
+        "fail_rate": 0.0,
+        "error_rate": 0.0,
+        "skipped_rate": 0.0
+      }
+    },
+    "by_tag": {
+      "check_istioObjects_status": {
+        "pass": 1,
+        "fail": 0,
+        "error": 0,
+        "skipped": 0,
+        "pass_rate": 100.0,
+        "fail_rate": 0.0,
+        "error_rate": 0.0,
+        "skipped_rate": 0.0,
+        "score_statistics": {
+          "count": 1,
+          "mean": 0.97,
+          "median": 0.97,
+          "std": 0.0,
+          "min": 0.97,
+          "max": 0.97,
+          "confidence_interval": null
+        }
+      }
+    },
+    "agent_latency_stats": {
+      "count": 1,
+      "mean": 28.298225423999952,
+      "median": 28.298225423999952,
+      "std": 0.0,
+      "min": 28.298225423999952,
+      "max": 28.298225423999952,
+      "p95": 28.298225423999952,
+      "p99": 28.298225423999952
+    }
+  },
+  "configuration": {
+    "llm": {
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "ssl_verify": true,
+      "ssl_cert_file": null,
+      "temperature": 0.0,
+      "max_tokens": 5000,
+      "timeout": 300,
+      "num_retries": 3,
+      "cache_enabled": true,
+      "parameters": {
+        "temperature": 0.0,
+        "max_completion_tokens": 5000
+      }
+    },
+    "embedding": {
+      "provider": "openai",
+      "model": "text-embedding-3-small",
+      "provider_kwargs": null,
+      "cache_enabled": true
+    },
+    "api": {
+      "api_base": "http://0.0.0.0:8080",
+      "version": "v1",
+      "endpoint_type": "query",
+      "timeout": 300,
+      "provider": "openai",
+      "model": "gpt-5",
+      "no_tools": null,
+      "system_prompt": null,
+      "extra_request_params": {
+        "mode": "troubleshooting"
+      },
+      "cache_enabled": false,
+      "num_retries": 3,
+      "enabled": true,
+      "mcp_headers": null
+    }
+  },
+  "results": [
+    {
+      "conversation_group_id": "check_istioObject_status",
+      "tag": "check_istioObjects_status",
+      "turn_id": "diagnose",
+      "metric_identifier": "custom:answer_correctness",
+      "result": "PASS",
+      "score": 0.97,
+      "threshold": null,
+      "execution_time": 31.309100133000015,
+      "evaluation_latency": 3.0108747090000634,
+      "judge_llm_input_tokens": 1357,
+      "judge_llm_output_tokens": 295,
+      "judge_scores": [
+        {
+          "judge_id": "primary",
+          "score": 0.97,
+          "reason": "Custom answer correctness: 0.97 - The response is highly aligned with the expected answer. It correctly identifies the VirtualService `reviews-bad-config` as invalid and reports the three key validation issues expected:",
+          "judge_input_tokens": 1357,
+          "judge_output_tokens": 295,
+          "embedding_tokens": 0
+        }
+      ],
+      "time_to_first_token": null,
+      "streaming_duration": null,
+      "agent_latency": 28.298225423999952,
+      "tokens_per_second": null
+    }
+  ]
+}

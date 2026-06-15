@@ -1,7 +1,7 @@
 # ✅ fix_bookinfo_fault_injection
 
 **OLS model:** `openai/gpt-5` &nbsp;|&nbsp; **Judge:** `openai/gpt-5.4-mini`  
-**Run:** 2026-06-12 13:19:15 &nbsp;|&nbsp; **Evaluations:** 1 &nbsp;|&nbsp; ✅ 1 PASS &nbsp; ❌ 0 FAIL &nbsp; ⚠️ 0 ERROR &nbsp; (100%)
+**Run:** 2026-06-15 11:44:23 &nbsp;|&nbsp; **Evaluations:** 1 &nbsp;|&nbsp; ✅ 1 PASS &nbsp; ❌ 0 FAIL &nbsp; ⚠️ 0 ERROR &nbsp; (100%)
 
 > Multi-turn: a 100% fault injection on ratings causes 503 errors. Agent investigates, identifies root cause, and fixes it.
 
@@ -9,18 +9,18 @@
 
 ## Pass Rates
 
-![Pass Rates](graphs/evaluation_20260612_131915_pass_rates.png)
+![Pass Rates](graphs/evaluation_20260615_114423_pass_rates.png)
 
 <details>
 <summary>More graphs</summary>
 
 ### Score Distribution
 
-![Score Distribution](graphs/evaluation_20260612_131915_score_distribution.png)
+![Score Distribution](graphs/evaluation_20260615_114423_score_distribution.png)
 
 ### Status Breakdown
 
-![Status Breakdown](graphs/evaluation_20260612_131915_status_breakdown.png)
+![Status Breakdown](graphs/evaluation_20260615_114423_status_breakdown.png)
 
 </details>
 
@@ -28,7 +28,7 @@
 
 | Metric | ✅ | ❌ | ⚠️ | Pass Rate | Mean Score |
 |---|---|---|---|---|---|
-| `custom:answer_correctness` | 1 | 0 | 0 | ✅ 100% | 1.00 |
+| `custom:answer_correctness` | 1 | 0 | 0 | ✅ 100% | 0.98 |
 
 ## Turns
 
@@ -40,14 +40,13 @@
 
 | Metric | Result | Score |
 |---|---|---|
-| `custom:answer_correctness` | ✅ PASS | `████████████████` 1.00 |
+| `custom:answer_correctness` | ✅ PASS | `████████████████` 0.98 |
 
 <details>
 <summary>Actual tool calls</summary>
 
 - `kiali_manage_istio_config_read`(action=list, namespace=bookinfo, serviceName=ratings)
 - `kiali_manage_istio_config_read`(action=get, group=networking.istio.io, kind=VirtualService, namespace=bookinfo, …)
-- `kiali_manage_istio_config_read`(action=get, group=networking.istio.io, kind=DestinationRule, namespace=bookinfo, …)
 
 </details>
 
@@ -57,26 +56,26 @@
 ```
 Diagnosis
 - Evidence:
-  - Istio VirtualService bookinfo/ratings includes a 100% fault injection abort:
-    - spec.hosts: ["ratings.bookinfo.svc.cluster.local"]
+  - Istio VirtualService bookinfo/ratings (networking.istio.io/v1) contains an HTTP fault injection:
     - spec.http[0].fault.abort.httpStatus: 503
     - spec.http[0].fault.abort.percentage.value: 100
-    - Route: 100% to ratings.bookinfo.svc.cluster.local subset v1
-    - Created at: 2026-06-12T13:12:48Z
-  - DestinationRule bookinfo/ratings defines subset v1 correctly (labels: version=v1). No issues there.
-
+    - Route targets ratings.bookinfo.svc.cluster.local subset v1 at weight 100
+  - Object details:
+    - name: ratings
+    - namespace: bookinfo
+    - creationTimestamp: 2026-06-15T11:38:06Z
 - Root cause:
-  - The VirtualService injects a 503 abort for 100% of HTTP requests to ratings. This forces failures even though pods are running and mTLS/auth are fine.
+  - The VirtualService is deliberately aborting 100% of requests to the ratings service with HTTP 503. This causes productpage calls to ratings to fail, even though all pods are running and mTLS/auth are fine.
 
-Fix / Mitigation
-- Immediate fix (reversible): Remove the fault injection block from the VirtualService, or set percentage to 0. Example desired VS http rule (keeping routing to v1):
+Fix/Mitigation
+- Immediate mitigation (reversible):
+  - Remove the fault injection block from the VirtualService, or set percentage.value to 0. After removal, traffic will route to ratings v1 normally.
+- Corrected VirtualService spec (example):
+  - hosts: ["ratings.bookinfo.svc.cluster.local"]
   - http:
     - route:
       - destination:
-          host: ratings.bookinfo.svc.cluster.local
-          subset: v1
-        weight: 100
-- Alternative (if fault injection was int…
+          host: rating…
 ```
 
 </details>
@@ -90,5 +89,5 @@ The agent should find and cite the ratings VirtualService spec showing a fault.a
 
 ---
 
-*Tokens — Judge: 730 | API: 7,298 | Total: 8,028*
-*Latency — mean: 17.8s | p95: 17.8s*
+*Tokens — Judge: 781 | API: 4,335 | Total: 5,116*
+*Latency — mean: 13.3s | p95: 13.3s*

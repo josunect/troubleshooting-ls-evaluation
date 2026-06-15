@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-12T13:04:22.489922+00:00",
+  "timestamp": "2026-06-15T11:37:53.151915+00:00",
   "total_evaluations": 1,
   "summary_stats": {
     "overall": {
@@ -12,14 +12,14 @@
       "fail_rate": 0.0,
       "error_rate": 0.0,
       "skipped_rate": 0.0,
-      "total_judge_llm_input_tokens": 992,
-      "total_judge_llm_output_tokens": 423,
-      "total_judge_llm_tokens": 1415,
+      "total_judge_llm_input_tokens": 1032,
+      "total_judge_llm_output_tokens": 307,
+      "total_judge_llm_tokens": 1339,
       "total_embedding_tokens": 0,
-      "total_api_input_tokens": 11195,
-      "total_api_output_tokens": 720,
-      "total_api_tokens": 11915,
-      "total_tokens": 13330
+      "total_api_input_tokens": 30757,
+      "total_api_output_tokens": 765,
+      "total_api_tokens": 31522,
+      "total_tokens": 32861
     },
     "by_metric": {
       "custom:answer_correctness": {
@@ -33,17 +33,17 @@
         "skipped_rate": 0.0,
         "score_statistics": {
           "count": 1,
-          "mean": 0.72,
-          "median": 0.72,
+          "mean": 0.92,
+          "median": 0.92,
           "std": 0.0,
-          "min": 0.72,
-          "max": 0.72,
+          "min": 0.92,
+          "max": 0.92,
           "confidence_interval": null
         }
       }
     },
     "by_conversation": {
-      "check_bookinfo_services": {
+      "fix_bookinfo_routing": {
         "pass": 1,
         "fail": 0,
         "error": 0,
@@ -55,7 +55,7 @@
       }
     },
     "by_tag": {
-      "check_bookinfo_services": {
+      "fix_bookinfo_routing": {
         "pass": 1,
         "fail": 0,
         "error": 0,
@@ -66,24 +66,24 @@
         "skipped_rate": 0.0,
         "score_statistics": {
           "count": 1,
-          "mean": 0.72,
-          "median": 0.72,
+          "mean": 0.92,
+          "median": 0.92,
           "std": 0.0,
-          "min": 0.72,
-          "max": 0.72,
+          "min": 0.92,
+          "max": 0.92,
           "confidence_interval": null
         }
       }
     },
     "agent_latency_stats": {
       "count": 1,
-      "mean": 16.942146934999982,
-      "median": 16.942146934999982,
+      "mean": 51.4200147009999,
+      "median": 51.4200147009999,
       "std": 0.0,
-      "min": 16.942146934999982,
-      "max": 16.942146934999982,
-      "p95": 16.942146934999982,
-      "p99": 16.942146934999982
+      "min": 51.4200147009999,
+      "max": 51.4200147009999,
+      "p95": 51.4200147009999,
+      "p99": 51.4200147009999
     }
   },
   "configuration": {
@@ -128,30 +128,30 @@
   },
   "results": [
     {
-      "conversation_group_id": "check_bookinfo_services",
-      "tag": "check_bookinfo_services",
-      "turn_id": "diagnose",
+      "conversation_group_id": "fix_bookinfo_routing",
+      "tag": "fix_bookinfo_routing",
+      "turn_id": "investigate",
       "metric_identifier": "custom:answer_correctness",
       "result": "PASS",
-      "score": 0.72,
+      "score": 0.92,
       "threshold": null,
-      "execution_time": 21.14585236900001,
-      "evaluation_latency": 4.203705434000028,
-      "judge_llm_input_tokens": 992,
-      "judge_llm_output_tokens": 423,
+      "execution_time": 54.252568356999745,
+      "evaluation_latency": 2.8325536559998454,
+      "judge_llm_input_tokens": 1032,
+      "judge_llm_output_tokens": 307,
       "judge_scores": [
         {
           "judge_id": "primary",
-          "score": 0.72,
-          "reason": "Custom answer correctness: 0.72 - The response is largely aligned with the expected outcome, but it has some issues that prevent it from being fully correct.",
-          "judge_input_tokens": 992,
-          "judge_output_tokens": 423,
+          "score": 0.92,
+          "reason": "Custom answer correctness: 0.92 - The response is largely correct and aligns well with the expected diagnosis and fix.",
+          "judge_input_tokens": 1032,
+          "judge_output_tokens": 307,
           "embedding_tokens": 0
         }
       ],
       "time_to_first_token": null,
       "streaming_duration": null,
-      "agent_latency": 16.942146934999982,
+      "agent_latency": 51.4200147009999,
       "tokens_per_second": null
     }
   ]

@@ -2,7 +2,7 @@
 
 Evaluation results for the **OpenShift LightSpeed (OLS) OSSM** test suite.
 
-**Latest run:** 2026-06-12 13:26:33 &nbsp;|&nbsp; **Provider:** `openai` &nbsp;|&nbsp; **Metric:** `custom:answer_correctness`
+**Latest run:** 2026-06-15 11:51:06 &nbsp;|&nbsp; **Provider:** `openai` &nbsp;|&nbsp; **Metric:** `custom:answer_correctness`
 
 **OLS backend:** `openai/gpt-5` &nbsp;|&nbsp; **Judge:** `openai/gpt-5.4-mini`
 
@@ -14,42 +14,47 @@ See [OSSM.md](OSSM.md) for how to run these tests and refresh this report.
 
 | Variant | Conversation | OLS Model | ✅ Pass | ❌ Fail | ⚠️ Error | Pass Rate | Mean Score |
 |---|---|---|---|---|---|---|---|
-| With MCP | [`check_bookinfo_services`](ossm/results/mcp/check_bookinfo_services_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.72 |
-| With MCP | [`check_latency_bookinfo_issue`](ossm/results/mcp/check_latency_bookinfo_issue_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.96 |
-| With MCP | [`check_mesh_status`](ossm/results/mcp/check_mesh_status_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.78 |
-| With MCP | [`fix_bookinfo_fault_injection`](ossm/results/mcp/fix_bookinfo_fault_injection_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 1.00 |
-| With MCP | [`fix_bookinfo_routing`](ossm/results/mcp/fix_bookinfo_routing_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.93 |
-| With MCP | [`troubleshoot_latency_trace`](ossm/results/mcp/troubleshoot_latency_trace_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.92 |
+| With MCP | [`check_bookinfo_services`](ossm/results/mcp/check_bookinfo_services_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.92 |
+| With MCP | [`check_istioObject_status`](ossm/results/mcp/check_istioObject_status_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.97 |
+| With MCP | [`check_latency_bookinfo_issue`](ossm/results/mcp/check_latency_bookinfo_issue_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.92 |
+| With MCP | [`check_mesh_status`](ossm/results/mcp/check_mesh_status_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.86 |
+| With MCP | [`fix_bookinfo_fault_injection`](ossm/results/mcp/fix_bookinfo_fault_injection_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.98 |
+| With MCP | [`fix_bookinfo_routing`](ossm/results/mcp/fix_bookinfo_routing_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.92 |
+| With MCP | [`troubleshoot_latency_trace`](ossm/results/mcp/troubleshoot_latency_trace_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.93 |
 | Without MCP | [`check_mesh_status_no_kiali`](ossm/results/no-mcp/check_mesh_status_no_kiali_gpt-5.md) | `gpt-5` | 1 | 0 | 0 | ✅ 100% | 0.78 |
 
 ## Scenario Detail Pages
 
 ### `check_bookinfo_services` — Check my bookinfo namespace services in my servicemesh
 
-- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/check_bookinfo_services_gpt-5.md) — 2026-06-12 13:04:22
+- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/check_bookinfo_services_gpt-5.md) — 2026-06-15 11:29:28
+
+### `check_istioObject_status` — A misconfigured VirtualService (reviews-bad-config) is deployed in bookinfo with four Kiali validation errors: missing gateway, undefined subset, non-existent destination host, and route weights not summing to 100.
+
+- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/check_istioObject_status_gpt-5.md) — 2026-06-15 11:28:44
 
 ### `check_latency_bookinfo_issue` — Users are reporting that the Bookinfo productpage is occasionally taking 5+ seconds to load, but it doesn't happen on every request.
 
-- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/check_latency_bookinfo_issue_gpt-5.md) — 2026-06-12 13:05:30
+- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/check_latency_bookinfo_issue_gpt-5.md) — 2026-06-15 11:30:50
 
 ### `check_mesh_status` — Check the status of the mesh and identify any issues.
 
-- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/check_mesh_status_gpt-5.md) — 2026-06-12 13:03:52
+- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/check_mesh_status_gpt-5.md) — 2026-06-15 11:22:04
 
 ### `check_mesh_status_no_kiali` — Check the status of the mesh and identify any issues.
 
-- [✅ Without MCP / `gpt-5` — 100% (1/1)](ossm/results/no-mcp/check_mesh_status_no_kiali_gpt-5.md) — 2026-06-12 13:05:16
+- [✅ Without MCP / `gpt-5` — 100% (1/1)](ossm/results/no-mcp/check_mesh_status_no_kiali_gpt-5.md) — 2026-06-15 11:22:41
 
 ### `fix_bookinfo_fault_injection` — Multi-turn: a 100% fault injection on ratings causes 503 errors. Agent investigates, identifies root cause, and fixes it.
 
-- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/fix_bookinfo_fault_injection_gpt-5.md) — 2026-06-12 13:19:15
+- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/fix_bookinfo_fault_injection_gpt-5.md) — 2026-06-15 11:44:23
 
 ### `fix_bookinfo_routing` — Multi-turn: reviews-v3 has weight 0 so never gets traffic. Agent investigates, identifies the routing issue, and fixes weights.
 
-- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/fix_bookinfo_routing_gpt-5.md) — 2026-06-12 13:12:34
+- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/fix_bookinfo_routing_gpt-5.md) — 2026-06-15 11:37:53
 
 ### `troubleshoot_latency_trace` — A 3-second delay fault is injected on the ratings service. The agent must identify the latency root cause using traces and fix the delay.
 
-- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/troubleshoot_latency_trace_gpt-5.md) — 2026-06-12 13:26:33
+- [✅ With MCP / `gpt-5` — 100% (1/1)](ossm/results/mcp/troubleshoot_latency_trace_gpt-5.md) — 2026-06-15 11:51:06
 
 *Generated by `scripts/generate_ossm_results.py`*
