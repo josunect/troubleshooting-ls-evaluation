@@ -67,7 +67,7 @@ endif
 MCP_ENABLED ?= true
 ifeq ($(MCP_ENABLED),false)
   OLS_PROVIDER_CONFIG_FILE = olsconfig-openai-no-mcp.yaml
-  SYSTEM_CONFIG             = system/system_openai.yaml
+  SYSTEM_CONFIG             = system/system_openai_no_tools.yaml
 endif
 
 ifeq ($(KIALI_TOOLSET_ENABLED),true)

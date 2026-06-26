@@ -18,13 +18,21 @@
 
 OSSM_CONVERSATIONS = ossm/conversations.yaml
 
-# Base eval command — shared by all targets
-# SYSTEM_CONFIG and OLS_PROVIDER_CONFIG_FILE are set by PROVIDER in the root Makefile
-SYSTEM_CONFIG = system/system_openai.yaml
+# System config — MCP_ENABLED=false selects the no-tools variant so the eval
+# framework explicitly passes no_tools=true to OLS at the /query level.  This
+# is a second layer of defence on top of the olsconfig-openai-no-mcp.yaml OLS
+# configuration that already starts OLS without MCP integration.
+ifeq ($(MCP_ENABLED),false)
+  OSSM_SYSTEM_CONFIG = system/system_openai_no_tools.yaml
+else
+  OSSM_SYSTEM_CONFIG = system/system_openai.yaml
+endif
+
 RESULTS_OSSM_DIR ?= ossm/results/
-RESULTS_OSSM_DIR_MCP = $(RESULTS_OSSM_DIR)/mcp
 ifeq ($(MCP_ENABLED),false)
   RESULTS_OSSM_DIR_MCP = $(RESULTS_OSSM_DIR)/no-mcp
+else
+  RESULTS_OSSM_DIR_MCP = $(RESULTS_OSSM_DIR)/mcp
 endif
 
 OSSM_EVAL_BASE = OPENAI_API_KEY=$${OPENAI_API_KEY:-$$(cat "$(OPENAI_KEY_FILE)")} \
@@ -32,7 +40,7 @@ OSSM_EVAL_BASE = OPENAI_API_KEY=$${OPENAI_API_KEY:-$$(cat "$(OPENAI_KEY_FILE)")}
             API_KEY=$(_KIALI_TOKEN) \
             KUBECTL=$(KUBECTL) \
             venv/bin/lightspeed-eval \
-            --system-config $(SYSTEM_CONFIG) \
+            --system-config $(OSSM_SYSTEM_CONFIG) \
             --output-dir $(RESULTS_OSSM_DIR) \
             --eval-data $(OSSM_CONVERSATIONS)
 
